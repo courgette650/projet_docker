@@ -30,3 +30,5 @@ docker-compose up
  6. Lien vers la [documentation](http://localhost:5000/docs) de l'API
  ___
  _/!\ Les erreurs SQL ne sont pas gérées !_
+
+ [Documentaion de l'API](api_doc.pdf)
