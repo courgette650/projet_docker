@@ -1,31 +1,42 @@
-version: '3.8'
+version: '3.8' # version du format de docker compose
 services:
+    # liste des services
     api-service:
-        build: .
-        container_name: api-service
+        # nom du service
+        build: . # chemin du dossier contenant le Dockerfile
+        container_name: api-service # nom du container
         volumes:
-            - ./api/:/usr/src/app/
+            # liste des volumes
+            - ./api/:/usr/src/app/ # monte le dossier api dans le container
+            - ./init_db.sql:/usr/src/app/init_db.sql:ro # monte le fichier init_db.sql dans le container en read only dans le repertoire api
         ports:
-            - 5000:5000
+            # liste des ports
+            - 5000:5000 # expose le port 5000 du container sur le port 5000 de l'hote
         environment:
-            PORT: 5000
-        restart: always
-
+            # liste des variables d'environnement
+            PORT: 5000 # definit la variable d'environnement PORT a 5000
+        restart: always # redemarre le container en cas de crash
+    # ceci est un commentaire dans une ligne vide
     mariadb:
-        image: mariadb
-        container_name: mariadb
+        # nom du service
+        image: mariadb # image du service
+        container_name: mariadb # nom du container
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: mydatabase
-            MYSQL_USER: maria
-            MYSQL_PASSWORD: maria
+            # liste des variables d'environnement
+            MYSQL_ROOT_PASSWORD: root # definit la variable d'environnement MYSQL_ROOT_PASSWORD a root
+            MYSQL_DATABASE: mydatabase # definit la variable d'environnement MYSQL_DATABASE a mydatabase
+            MYSQL_USER: maria # definit la variable d'environnement MYSQL_USER a maria
+            MYSQL_PASSWORD: maria # definit la variable d'environnement MYSQL_PASSWORD a maria
         volumes:
-            - ./mariadb:/var/lib/mysql
-
+            # liste des volumes
+            - ./mariadb:/var/lib/mysql # monte le dossier mariadb dans le container dans le repertoire /var/lib/mysql
+    # encore un commentaire dans une ligne vide
     adminer:
-        image: adminer
-        container_name: adminer
+        # nom du service
+        image: adminer # image du service
+        container_name: adminer # nom du container
         depends_on:
-            - mariadb
+            # liste des services dont le container depend il doit se lancer après
+            - mariadb # le container adminer depend du container mariadb il doit se lancer apres
         ports:
-            - 8080:8080
+            - 8080:8080 # expose le port 8080 du container sur le port 8080 de l'hote
