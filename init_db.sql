@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS CREATE TABLE IF NOT EXISTS customers (
+DROP TABLE IF EXISTS customers;
+CREATE TABLE IF NOT EXISTS customers (
     id int(11) NOT NULL,
     firstname varchar(200) NOT NULL,
     name varchar(200) NOT NULL,
