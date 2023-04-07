@@ -1,6 +1,7 @@
 import mysql.connector
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+import os
 
 description = """
 Customers API, l'API qui va changer votre vie ! 🚀 \n
@@ -19,14 +20,17 @@ tags_metadata = [
     },
 ]
 
-app = FastAPI(description=description, title="Customers API", openapi_tags=tags_metadata , license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"}, version="1.0.0")
+user = os.environ.get('DATABASE_USER')
+password = os.environ.get('DATABASE_PASSWORD')
+
 config = {
     'host': 'mariadb',
     'port': 3306,
-    'user': 'root',
-    'password': 'root',
+    'user': user,
+    'password': password,
     'database': 'mydatabase'
 }
+app = FastAPI(description=description, title="Customers API", openapi_tags=tags_metadata , license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"}, version="1.0.0")
 
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
